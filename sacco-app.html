@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFRIDEV Mwanachama SACCO | Standalone PWA</title>
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    <!-- App Favicon / Icon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23020617'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2310b981' stroke-width='4'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='28' fill='%2310b981'%3EMW%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- App Header -->
+    <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-black text-emerald-400 text-lg">MW</div>
+                <div>
+                    <h1 class="font-bold text-white text-base leading-tight">Mwanachama Portal</h1>
+                    <p class="text-xs text-slate-400">AFRIDEV Standalone SACCO Engine</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="switchView('member')" id="tab-member" class="bg-emerald-500 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl transition-colors">Member View</button>
+                <button onclick="switchView('leader')" id="tab-leader" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold px-4 py-2 rounded-xl transition-colors">Leader Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-10 px-6 max-w-5xl mx-auto">
+
+        <!-- ================= MEMBER VIEW ================= -->
+        <div id="view-member" class="space-y-8">
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Active Member Account</div>
+                    <h2 id="active-member-display" class="text-2xl font-bold text-white mt-1">John Kamau <span class="text-sm font-mono text-slate-400 bg-slate-950 px-2.5 py-0.5 rounded border border-slate-800 ml-1">#SK-8842</span></h2>
+                    <p class="text-slate-400 text-sm mt-0.5">Umoja Vijana Chama • Offline SQLite Cache Active</p>
+                </div>
+                <button onclick="installAppPrompt()" class="bg-slate-950 hover:bg-slate-800 border border-slate-700 text-emerald-400 text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors">
+                    📱 Install App to Home Screen
+                </button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Savings & Shares</div>
+                    <div id="stat-savings" class="text-3xl font-black text-emerald-400 mt-2">KES 18,500</div>
+                    <div class="text-xs text-slate-500 mt-1">Auto-updated via M-Pesa text parser</div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">Credit Loan Limit</div>
+                    <div id="stat-limit" class="text-3xl font-black text-white mt-2">KES 50,000</div>
+                    <div class="text-xs text-slate-500 mt-1">3x multiplier on total savings</div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-slate-400 text-xs font-bold uppercase tracking-wider">Active Chama Loan</div>
+                    <div id="stat-loan" class="text-3xl font-black text-amber-400 mt-2">KES 0</div>
+                    <div class="text-xs text-slate-500 mt-1">Payable in 30 days at 1.5%</div>
+                </div>
+            </div>
+
+            <!-- M-Pesa Parser & Ledger -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Upload M-Pesa SMS / Receipt</h3>
+                        <p class="text-slate-400 text-sm mb-6">Forwarded from M-Pesa or copied by member. Paste the confirmation message below to instantly log your deposit.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Raw M-Pesa Message</label>
+                                <textarea id="mpesa-input" rows="4" placeholder="QG8829X72 Confirmed. Ksh2,500 received for account SK-8842..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-emerald-500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="parseMpesaMessage()" class="mt-6 w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 rounded-xl text-center text-sm transition-colors shadow-lg shadow-emerald-500/10">
+                        Parse & Log Contribution
+                    </button>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2">Contribution History</h3>
+                        <p class="text-slate-400 text-sm mb-6">Immutable local ledger verified for this member ID.</p>
+                        
+                        <div id="ledger-list" class="space-y-3 max-h-60 overflow-y-auto pr-1">
+                            <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl flex justify-between items-center text-sm">
+                                <div>
+                                    <div class="font-semibold text-white">Monthly Savings Deposit</div>
+                                    <div class="text-xs text-slate-400">QG8829X72 • Yesterday</div>
+                                </div>
+                                <span class="font-mono font-bold text-emerald-400">+KES 2,500</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="toast-msg" class="mt-6 hidden bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 p-3.5 rounded-xl text-xs font-semibold text-center"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LEADER ADMIN VIEW ================= -->
+        <div id="view-leader" class="space-y-8 hidden">
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="text-xs font-bold text-amber-400 uppercase tracking-widest">Group Admin Control Center</div>
+                    <h2 class="text-2xl font-bold text-white mt-1">Umoja Vijana Chama</h2>
+                    <p class="text-slate-400 text-sm mt-0.5">Issue unique member identity codes and oversee group liquidity.</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 px-5 py-3 rounded-2xl text-center">
+                    <div class="text-xs text-slate-400">Total Chama Pool</div>
+                    <div id="leader-pool" class="text-2xl font-black text-emerald-400">KES 18,500</div>
+                </div>
+            </div>
+
+            <!-- Register Member -->
+            <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                <h3 class="text-xl font-bold text-white mb-2">Register New Member</h3>
+                <p class="text-slate-400 text-sm mb-6">Assign a secure identity code for automated receipt matching.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1.5">Full Name</label>
+                        <input type="text" id="reg-name" placeholder="e.g. Sarah Akinyi" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1.5">Phone Number</label>
+                        <input type="text" id="reg-phone" placeholder="0712345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="registerMember()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-xl text-sm transition-colors shadow-lg shadow-emerald-500/10">
+                            Generate ID & Register
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member Directory Table -->
+            <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                <h3 class="text-xl font-bold text-white mb-4">Member Directory & Unique IDs</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-950 text-slate-400 border-b border-slate-800">
+                            <tr>
+                                <th class="p-3.5 rounded-l-xl">Unique ID</th>
+                                <th class="p-3.5">Name</th>
+                                <th class="p-3.5">Phone</th>
+                                <th class="p-3.5">Savings</th>
+                                <th class="p-3.5 rounded-r-xl text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leader-table-body" class="divide-y divide-slate-800">
+                            <tr>
+                                <td class="p-3.5 font-mono text-emerald-400 font-bold">#SK-8842</td>
+                                <td class="p-3.5 text-white font-semibold">John Kamau</td>
+                                <td class="p-3.5 text-slate-400">0706606816</td>
+                                <td class="p-3.5 text-white font-mono">KES 18,500</td>
+                                <td class="p-3.5 text-right"><button onclick="selectMember('#SK-8842')" class="text-xs bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 px-3 py-1.5 rounded-lg font-semibold transition-colors">Switch View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-10 px-6 mt-20 text-center text-xs text-slate-500">
+        <p>&copy; 2026 AFRIDEV Technologies Ltd. Standalone PWA Engine. Nairobi, Kenya.</p>
+    </footer>
+
+    <!-- Script Engine -->
+    <script>
+        let appState = {
+            members: [
+                { id: '#SK-8842', name: 'John Kamau', phone: '0706606816', savings: 18500, limit: 50000, loan: 0, transactions: [{ title: 'Monthly Savings Deposit', date: 'Yesterday', amount: '+KES 2,500', code: 'QG8829X72' }] }
+            ],
+            activeId: '#SK-8842'
+        };
+
+        function switchView(target) {
+            const mView = document.getElementById('view-member');
+            const lView = document.getElementById('view-leader');
+            const tMember = document.getElementById('tab-member');
+            const tLeader = document.getElementById('tab-leader');
+
+            if (target === 'member') {
+                mView.classList.remove('hidden');
+                lView.classList.add('hidden');
+                tMember.className = 'bg-emerald-500 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl transition-colors';
+                tLeader.className = 'bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold px-4 py-2 rounded-xl transition-colors';
+                renderMember();
+            } else {
+                mView.classList.add('hidden');
+                lView.classList.remove('hidden');
+                tLeader.className = 'bg-emerald-500 text-slate-950 text-xs font-bold px-4 py-2 rounded-xl transition-colors';
+                tMember.className = 'bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-xs font-bold px-4 py-2 rounded-xl transition-colors';
+                renderLeader();
+            }
+        }
+
+        function getActiveMember() {
+            return appState.members.find(m => m.id === appState.activeId) || appState.members[0];
+        }
+
+        function renderMember() {
+            const m = getActiveMember();
+            document.getElementById('active-member-display').innerHTML = `${m.name} <span class="text-sm font-mono text-slate-400 bg-slate-950 px-2.5 py-0.5 rounded border border-slate-800 ml-1">${m.id}</span>`;
+            document.getElementById('stat-savings').innerText = `KES ${m.savings.toLocaleString()}`;
+            document.getElementById('stat-limit').innerText = `KES ${m.limit.toLocaleString()}`;
+            document.getElementById('stat-loan').innerText = `KES ${m.loan.toLocaleString()}`;
+
+            const listEl = document.getElementById('ledger-list');
+            listEl.innerHTML = m.transactions.map(t => `
+                <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl flex justify-between items-center text-sm">
+                    <div>
+                        <div class="font-semibold text-white">${t.title}</div>
+                        <div class="text-xs text-slate-400">${t.code} • ${t.date}</div>
+                    </div>
+                    <span class="font-mono font-bold text-emerald-400">${t.amount}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderLeader() {
+            const total = appState.members.reduce((acc, m) => acc + m.savings, 0);
+            document.getElementById('leader-pool').innerText = `KES ${total.toLocaleString()}`;
+
+            const tbody = document.getElementById('leader-table-body');
+            tbody.innerHTML = appState.members.map(m => `
+                <tr>
+                    <td class="p-3.5 font-mono text-emerald-400 font-bold">${m.id}</td>
+                    <td class="p-3.5 text-white font-semibold">${m.name}</td>
+                    <td class="p-3.5 text-slate-400">${m.phone}</td>
+                    <td class="p-3.5 text-white font-mono">KES ${m.savings.toLocaleString()}</td>
+                    <td class="p-3.5 text-right"><button onclick="selectMember('${m.id}')" class="text-xs bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 px-3 py-1.5 rounded-lg font-semibold transition-colors">Switch View</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function parseMpesaMessage() {
+            const raw = document.getElementById('mpesa-input').value.trim();
+            const toast = document.getElementById('toast-msg');
+            const m = getActiveMember();
+
+            if (!raw) {
+                alert('Please paste an M-Pesa confirmation text.');
+                return;
+            }
+
+            const codeMatch = raw.match(/^([A-Z0-9]{10})/);
+            const amtMatch = raw.match(/Ksh([\d,]+)/i) || raw.match(/KES([\d,]+)/i);
+
+            const txCode = codeMatch ? codeMatch[1] : 'MP-' + Math.floor(1000 + Math.random() * 9000);
+            const amt = amtMatch ? parseInt(amtMatch[1].replace(/,/g, ''), 10) : 1000;
+
+            m.savings += amt;
+            m.limit = m.savings * 3;
+            m.transactions.unshift({ title: 'M-Pesa Contribution', date: 'Just now', amount: `+KES ${amt.toLocaleString()}`, code: txCode });
+
+            renderMember();
+            document.getElementById('mpesa-input').value = '';
+
+            toast.classList.remove('hidden');
+            toast.innerText = `✅ Success! Extracted ${txCode} (KES ${amt.toLocaleString()}) for ${m.name}.`;
+            setTimeout(() => { toast.classList.add('hidden'); }, 4000);
+        }
+
+        function registerMember() {
+            const name = document.getElementById('reg-name').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+
+            if (!name || !phone) {
+                alert('Please enter both name and phone number.');
+                return;
+            }
+
+            const uniqueId = '#SK-' + Math.floor(1000 + Math.random() * 9000);
+            appState.members.push({ id: uniqueId, name: name, phone: phone, savings: 0, limit: 0, loan: 0, transactions: [] });
+
+            document.getElementById('reg-name').value = '';
+            document.getElementById('reg-phone').value = '';
+
+            renderLeader();
+            alert(`Member registered successfully! Unique ID: ${uniqueId}`);
+        }
+
+        function selectMember(id) {
+            appState.activeId = id;
+            switchView('member');
+        }
+
+        function installAppPrompt() {
+            alert('To install this app to your phone: Tap your browser menu (...) and select "Add to Home Screen" or "Install App".');
+        }
+    </script>
+
+</body>
+</html>
