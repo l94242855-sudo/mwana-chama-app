@@ -6,7 +6,7 @@
     <title>Mwanachama SACCO | Nairovexia PWA</title>
     <!-- PWA Manifest Link -->
     <link rel="manifest" href="manifest.json">
-    <!-- App Favicon (Uses your uploaded logo.png) -->
+    <!-- App Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,11 +16,9 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-200">
 
-    <!-- ================= INSTAGRAM / WHATSAPP STYLE SPLASH SCREEN ================= -->
+    <!-- ================= SPLASH SCREEN ================= -->
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-slate-950 px-6 py-12 transition-opacity duration-700">
-        <div></div> <!-- Spacer -->
-        
-        <!-- Center Animated Custom Logo & Branding -->
+        <div></div>
         <div class="flex flex-col items-center space-y-4 animate-pulse">
             <div class="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl border border-emerald-500/40 bg-slate-900 p-2 shadow-2xl shadow-emerald-500/20">
                 <img src="logo.png" alt="Mwanachama Logo" class="h-full w-full object-contain rounded-2xl">
@@ -30,8 +28,6 @@
                 <p class="font-mono text-xs tracking-wider text-emerald-400 uppercase mt-1">SACCO & Chama Engine</p>
             </div>
         </div>
-
-        <!-- Bottom "From Nairovexia" Footer (Instagram Meta Style) -->
         <div class="flex flex-col items-center space-y-1">
             <span class="font-mono text-[10px] tracking-widest text-slate-500 uppercase">FROM</span>
             <span class="font-bold tracking-wider text-slate-300 text-sm">NAIROVEXIA TECHNOLOGIES</span>
@@ -42,7 +38,6 @@
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- Custom App Logo -->
                 <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-emerald-500/40 bg-slate-900 p-1 shadow-inner">
                     <img src="logo.png" alt="Mwanachama Logo" class="h-full w-full object-contain rounded-lg">
                 </div>
@@ -53,7 +48,6 @@
             </div>
             
             <div class="flex items-center gap-3">
-                <!-- Theme Toggle Button -->
                 <button onclick="toggleTheme()" aria-label="Toggle Theme" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
                     <svg id="theme-icon-dark" class="w-4 h-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -79,29 +73,48 @@
                 <div>
                     <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Active Member Account</div>
                     <h3 id="active-member-display" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">John Kamau <span class="text-sm font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 ml-1">#SK-8842</span></h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Umoja Vijana Chama • Offline SQLite Cache Active</p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Umoja Vijana Chama • Secure Local Device Storage</p>
                 </div>
                 <button onclick="installAppPrompt()" class="bg-slate-100 dark:bg-slate-950 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-emerald-600 dark:text-emerald-400 text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors">
                     📱 Install App to Home Screen
                 </button>
             </div>
 
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Expanded Account Details Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Savings -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
-                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Total Savings & Shares</div>
+                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Total Savings</div>
                     <div id="stat-savings" class="text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-2">KES 18,500</div>
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Auto-updated via M-Pesa text parser</div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Updated via M-Pesa parser</div>
                 </div>
+
+                <!-- Interest Earned -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
+                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Interest Earned</div>
+                    <div id="stat-interest" class="text-3xl font-black text-teal-600 dark:text-teal-400 mt-2">KES 1,250</div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Accrued dividend share</div>
+                </div>
+
+                <!-- Christmas Savings -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
+                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Christmas Savings</div>
+                    <div id="stat-xmas" class="text-3xl font-black text-blue-600 dark:text-blue-400 mt-2">KES 4,000</div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Locked holiday kitty</div>
+                </div>
+
+                <!-- Credit Loan Limit -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
                     <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Credit Loan Limit</div>
-                    <div id="stat-limit" class="text-3xl font-black text-slate-900 dark:text-white mt-2">KES 50,000</div>
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">3x multiplier on total savings</div>
+                    <div id="stat-limit" class="text-3xl font-black text-slate-900 dark:text-white mt-2">KES 55,500</div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">3x multiplier on savings</div>
                 </div>
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
-                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Active Chama Loan</div>
+
+                <!-- Active Loan -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm sm:col-span-2 lg:col-span-2">
+                    <div class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Active Chama Loan Balance</div>
                     <div id="stat-loan" class="text-3xl font-black text-amber-500 dark:text-amber-400 mt-2">KES 0</div>
-                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Payable in 30 days at 1.5%</div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500 mt-1">Payable in 30 days at 1.5% reducing balance</div>
                 </div>
             </div>
 
@@ -130,13 +143,7 @@
                         <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Immutable local ledger verified for this member ID.</p>
                         
                         <div id="ledger-list" class="space-y-3 max-h-60 overflow-y-auto pr-1">
-                            <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl flex justify-between items-center text-sm">
-                                <div>
-                                    <div class="font-semibold text-slate-900 dark:text-white">Monthly Savings Deposit</div>
-                                    <div class="text-xs text-slate-500 dark:text-slate-400">QG8829X72 • Yesterday</div>
-                                </div>
-                                <span class="font-mono font-bold text-emerald-600 dark:text-emerald-400">+KES 2,500</span>
-                            </div>
+                            <!-- Populated dynamically -->
                         </div>
                     </div>
                     <div id="toast-msg" class="mt-6 hidden bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 p-3.5 rounded-xl text-xs font-semibold text-center"></div>
@@ -195,13 +202,7 @@
                             </tr>
                         </thead>
                         <tbody id="leader-table-body" class="divide-y divide-slate-200 dark:divide-slate-800">
-                            <tr>
-                                <td class="p-3.5 font-mono text-emerald-600 dark:text-emerald-400 font-bold">#SK-8842</td>
-                                <td class="p-3.5 text-slate-900 dark:text-white font-semibold">John Kamau</td>
-                                <td class="p-3.5 text-slate-500 dark:text-slate-400">0706606816</td>
-                                <td class="p-3.5 text-slate-900 dark:text-white font-mono">KES 18,500</td>
-                                <td class="p-3.5 text-right"><button onclick="selectMember('#SK-8842')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 px-3 py-1.5 rounded-lg font-semibold transition-colors">Switch View</button></td>
-                            </tr>
+                            <!-- Populated dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -224,14 +225,32 @@
                 splash.style.opacity = '0';
                 setTimeout(() => { splash.style.display = 'none'; }, 700);
             }, 1500);
+            renderMember();
         });
 
-        let appState = {
+        // Initialize state with local storage fallback
+        let appState = JSON.parse(localStorage.getItem('nairovexia_mwanachama_state')) || {
             members: [
-                { id: '#SK-8842', name: 'John Kamau', phone: '0706606816', savings: 18500, limit: 50000, loan: 0, transactions: [{ title: 'Monthly Savings Deposit', date: 'Yesterday', amount: '+KES 2,500', code: 'QG8829X72' }] }
+                { 
+                    id: '#SK-8842', 
+                    name: 'John Kamau', 
+                    phone: '0706606816', 
+                    savings: 18500, 
+                    interest: 1250,
+                    xmasSavings: 4000,
+                    limit: 55500, 
+                    loan: 0, 
+                    transactions: [
+                        { title: 'Monthly Savings Deposit', date: 'Yesterday', amount: '+KES 2,500', code: 'QG8829X72' }
+                    ] 
+                }
             ],
             activeId: '#SK-8842'
         };
+
+        function persistState() {
+            localStorage.setItem('nairovexia_mwanachama_state', JSON.stringify(appState));
+        }
 
         function toggleTheme() {
             const html = document.documentElement;
@@ -276,12 +295,15 @@
         function renderMember() {
             const m = getActiveMember();
             document.getElementById('active-member-display').innerHTML = `${m.name} <span class="text-sm font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 ml-1">${m.id}</span>`;
-            document.getElementById('stat-savings').innerText = `KES ${m.savings.toLocaleString()}`;
-            document.getElementById('stat-limit').innerText = `KES ${m.limit.toLocaleString()}`;
-            document.getElementById('stat-loan').innerText = `KES ${m.loan.toLocaleString()}`;
+            
+            document.getElementById('stat-savings').innerText = `KES ${(m.savings || 0).toLocaleString()}`;
+            document.getElementById('stat-interest').innerText = `KES ${(m.interest || 0).toLocaleString()}`;
+            document.getElementById('stat-xmas').innerText = `KES ${(m.xmasSavings || 0).toLocaleString()}`;
+            document.getElementById('stat-limit').innerText = `KES ${(m.limit || 0).toLocaleString()}`;
+            document.getElementById('stat-loan').innerText = `KES ${(m.loan || 0).toLocaleString()}`;
 
             const listEl = document.getElementById('ledger-list');
-            listEl.innerHTML = m.transactions.map(t => `
+            listEl.innerHTML = (m.transactions || []).map(t => `
                 <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3.5 rounded-xl flex justify-between items-center text-sm">
                     <div>
                         <div class="font-semibold text-slate-900 dark:text-white">${t.title}</div>
@@ -293,7 +315,7 @@
         }
 
         function renderLeader() {
-            const total = appState.members.reduce((acc, m) => acc + m.savings, 0);
+            const total = appState.members.reduce((acc, m) => acc + (m.savings || 0), 0);
             document.getElementById('leader-pool').innerText = `KES ${total.toLocaleString()}`;
 
             const tbody = document.getElementById('leader-table-body');
@@ -302,7 +324,7 @@
                     <td class="p-3.5 font-mono text-emerald-600 dark:text-emerald-400 font-bold">${m.id}</td>
                     <td class="p-3.5 text-slate-900 dark:text-white font-semibold">${m.name}</td>
                     <td class="p-3.5 text-slate-500 dark:text-slate-400">${m.phone}</td>
-                    <td class="p-3.5 text-slate-900 dark:text-white font-mono">KES ${m.savings.toLocaleString()}</td>
+                    <td class="p-3.5 text-slate-900 dark:text-white font-mono">KES ${(m.savings || 0).toLocaleString()}</td>
                     <td class="p-3.5 text-right"><button onclick="selectMember('${m.id}')" class="text-xs bg-slate-100 dark:bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 px-3 py-1.5 rounded-lg font-semibold transition-colors">Switch View</button></td>
                 </tr>
             `).join('');
@@ -328,6 +350,7 @@
             m.limit = m.savings * 3;
             m.transactions.unshift({ title: 'M-Pesa Contribution', date: 'Just now', amount: `+KES ${amt.toLocaleString()}`, code: txCode });
 
+            persistState();
             renderMember();
             document.getElementById('mpesa-input').value = '';
 
@@ -346,8 +369,19 @@
             }
 
             const uniqueId = '#SK-' + Math.floor(1000 + Math.random() * 9000);
-            appState.members.push({ id: uniqueId, name: name, phone: phone, savings: 0, limit: 0, loan: 0, transactions: [] });
+            appState.members.push({ 
+                id: uniqueId, 
+                name: name, 
+                phone: phone, 
+                savings: 0, 
+                interest: 0,
+                xmasSavings: 0,
+                limit: 0, 
+                loan: 0, 
+                transactions: [] 
+            });
 
+            persistState();
             document.getElementById('reg-name').value = '';
             document.getElementById('reg-phone').value = '';
 
@@ -362,6 +396,13 @@
 
         function installAppPrompt() {
             alert('To install this app to your phone: Tap your browser menu (...) and select "Add to Home Screen" or "Install App".');
+        }
+
+        // Register Service Worker for PWA offline capability
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').catch(err => console.log('SW registration failed:', err));
+            });
         }
     </script>
 </body>
