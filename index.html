@@ -6,8 +6,9 @@
     <title>Mwanachama SACCO | Nairovexia PWA</title>
     <!-- PWA Manifest Link -->
     <link rel="manifest" href="manifest.json">
-    <!-- App Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23020617'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2310b981' stroke-width='4'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='28' fill='%2310b981'%3ENX%3C/text%3E%3C/svg%3E">
+    <!-- App Favicon (Uses your uploaded logo.png) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
@@ -19,13 +20,10 @@
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-slate-950 px-6 py-12 transition-opacity duration-700">
         <div></div> <!-- Spacer -->
         
-        <!-- Center Animated Logo & Branding -->
+        <!-- Center Animated Custom Logo & Branding -->
         <div class="flex flex-col items-center space-y-4 animate-pulse">
-            <div class="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-emerald-500/40 bg-slate-900 shadow-2xl shadow-emerald-500/20">
-                <svg class="h-10 w-10 text-emerald-400" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 24V8L14.5 24V8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M18.5 8L27 24M27 8L18.5 24" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"/>
-                </svg>
+            <div class="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl border border-emerald-500/40 bg-slate-900 p-2 shadow-2xl shadow-emerald-500/20">
+                <img src="logo.png" alt="Mwanachama Logo" class="h-full w-full object-contain rounded-2xl">
             </div>
             <div class="text-center">
                 <h1 class="text-2xl font-black tracking-tight text-white">Mwanachama</h1>
@@ -44,12 +42,9 @@
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- NX Monogram Logo -->
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/40 bg-slate-900 shadow-inner">
-                    <svg class="h-5 w-5 text-emerald-400" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 24V8L14.5 24V8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M18.5 8L27 24M27 8L18.5 24" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"/>
-                    </svg>
+                <!-- Custom App Logo -->
+                <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-emerald-500/40 bg-slate-900 p-1 shadow-inner">
+                    <img src="logo.png" alt="Mwanachama Logo" class="h-full w-full object-contain rounded-lg">
                 </div>
                 <div>
                     <h2 class="font-bold text-slate-900 dark:text-white text-base leading-tight">Mwanachama Portal</h2>
