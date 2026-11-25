@@ -3,28 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nairovexia Mwanachama SACCO | Standalone PWA</title>
+    <title>Mwanachama SACCO | Nairovexia PWA</title>
     <!-- PWA Manifest Link -->
     <link rel="manifest" href="manifest.json">
-    <!-- App Favicon / Icon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23020617'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2310b981' stroke-width='4'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='28' fill='%2310b981'%3EMW%3C/text%3E%3C/svg%3E">
+    <!-- App Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23020617'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%2310b981' stroke-width='4'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui, -apple-system, sans-serif' font-weight='900' font-size='28' fill='%2310b981'%3ENX%3C/text%3E%3C/svg%3E">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
+        tailwind.config = { darkMode: 'class' }
     </script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-slate-950 transition-colors duration-200">
 
+    <!-- ================= INSTAGRAM / WHATSAPP STYLE SPLASH SCREEN ================= -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-between bg-slate-950 px-6 py-12 transition-opacity duration-700">
+        <div></div> <!-- Spacer -->
+        
+        <!-- Center Animated Logo & Branding -->
+        <div class="flex flex-col items-center space-y-4 animate-pulse">
+            <div class="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-emerald-500/40 bg-slate-900 shadow-2xl shadow-emerald-500/20">
+                <svg class="h-10 w-10 text-emerald-400" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 24V8L14.5 24V8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 8L27 24M27 8L18.5 24" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="text-center">
+                <h1 class="text-2xl font-black tracking-tight text-white">Mwanachama</h1>
+                <p class="font-mono text-xs tracking-wider text-emerald-400 uppercase mt-1">SACCO & Chama Engine</p>
+            </div>
+        </div>
+
+        <!-- Bottom "From Nairovexia" Footer (Instagram Meta Style) -->
+        <div class="flex flex-col items-center space-y-1">
+            <span class="font-mono text-[10px] tracking-widest text-slate-500 uppercase">FROM</span>
+            <span class="font-bold tracking-wider text-slate-300 text-sm">NAIROVEXIA TECHNOLOGIES</span>
+        </div>
+    </div>
+
     <!-- App Header -->
-    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-black text-emerald-600 dark:text-emerald-400 text-lg">MW</div>
+                <!-- NX Monogram Logo -->
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-500/40 bg-slate-900 shadow-inner">
+                    <svg class="h-5 w-5 text-emerald-400" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 24V8L14.5 24V8" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18.5 8L27 24M27 8L18.5 24" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"/>
+                    </svg>
+                </div>
                 <div>
-                    <h1 class="font-bold text-slate-900 dark:text-white text-base leading-tight">Mwanachama Portal</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Nairovexia Fintech SACCO Engine</p>
+                    <h2 class="font-bold text-slate-900 dark:text-white text-base leading-tight">Mwanachama Portal</h2>
+                    <p class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">Nairovexia Technologies Ltd</p>
                 </div>
             </div>
             
@@ -54,7 +83,7 @@
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                 <div>
                     <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Active Member Account</div>
-                    <h2 id="active-member-display" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">John Kamau <span class="text-sm font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 ml-1">#SK-8842</span></h2>
+                    <h3 id="active-member-display" class="text-2xl font-bold text-slate-900 dark:text-white mt-1">John Kamau <span class="text-sm font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 ml-1">#SK-8842</span></h3>
                     <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Umoja Vijana Chama • Offline SQLite Cache Active</p>
                 </div>
                 <button onclick="installAppPrompt()" class="bg-slate-100 dark:bg-slate-950 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-emerald-600 dark:text-emerald-400 text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors">
@@ -85,7 +114,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl flex flex-col justify-between shadow-sm">
                     <div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Upload M-Pesa SMS / Receipt</h3>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Upload M-Pesa SMS / Receipt</h4>
                         <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Forwarded from M-Pesa or copied by member. Paste the confirmation message below to instantly log your deposit.</p>
                         
                         <div class="space-y-4">
@@ -102,7 +131,7 @@
 
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl flex flex-col justify-between shadow-sm">
                     <div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Contribution History</h3>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Contribution History</h4>
                         <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Immutable local ledger verified for this member ID.</p>
                         
                         <div id="ledger-list" class="space-y-3 max-h-60 overflow-y-auto pr-1">
@@ -125,7 +154,7 @@
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-sm">
                 <div>
                     <div class="text-xs font-bold text-amber-500 dark:text-amber-400 uppercase tracking-widest">Group Admin Control Center</div>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">Umoja Vijana Chama</h2>
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">Umoja Vijana Chama</h3>
                     <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Issue unique member identity codes and oversee group liquidity.</p>
                 </div>
                 <div class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-5 py-3 rounded-2xl text-center">
@@ -136,7 +165,7 @@
 
             <!-- Register Member -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl shadow-sm">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Register New Member</h3>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Register New Member</h4>
                 <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Assign a secure identity code for automated receipt matching.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -158,7 +187,7 @@
 
             <!-- Member Directory Table -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl shadow-sm">
-                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Member Directory & Unique IDs</h3>
+                <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Member Directory & Unique IDs</h4>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
@@ -193,6 +222,15 @@
 
     <!-- Script Engine -->
     <script>
+        // Splash screen dismissal after 1.5 seconds
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => { splash.style.display = 'none'; }, 700);
+            }, 1500);
+        });
+
         let appState = {
             members: [
                 { id: '#SK-8842', name: 'John Kamau', phone: '0706606816', savings: 18500, limit: 50000, loan: 0, transactions: [{ title: 'Monthly Savings Deposit', date: 'Yesterday', amount: '+KES 2,500', code: 'QG8829X72' }] }
@@ -211,7 +249,6 @@
             }
         }
 
-        // Check saved preference on load
         if (localStorage.getItem('nairovexia_theme') === 'light') {
             document.documentElement.classList.remove('dark');
         }
@@ -332,6 +369,5 @@
             alert('To install this app to your phone: Tap your browser menu (...) and select "Add to Home Screen" or "Install App".');
         }
     </script>
-
 </body>
 </html>
